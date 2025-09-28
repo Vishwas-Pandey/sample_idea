@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Project Portfolio Hub</title>
+    <title>Login - ProjectHub</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -17,657 +17,74 @@
         background-color: #f8f7f4;
         color: #44403c;
       }
-      .project-card {
-        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+      .login-card {
+        background-color: white;
         border: 1px solid #e7e5e4;
-      }
-      .project-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
-          0 4px 6px -4px rgb(0 0 0 / 0.1);
-      }
-      nav a {
-        transition: color 0.2s ease-in-out;
-      }
-      .kanban-column {
-        min-height: 200px;
-        border-radius: 1rem;
-        padding: 1rem;
-      }
-      #newProjectModal {
-        transition: opacity 0.3s ease-in-out;
-      }
-      .modal-body {
-        max-height: 80vh;
-        overflow-y: auto;
-      }
-      .empty-state {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 150px;
-        border: 2px dashed #d6d3d1;
-        border-radius: 0.75rem;
-        color: #78716c;
-      }
-      #profileDropdown {
-        transition: transform 0.2s ease-out, opacity 0.2s ease-out;
       }
     </style>
   </head>
-  <body class="antialiased">
-    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
-      <!-- Navigation Bar -->
-      <nav
-        class="flex justify-between items-center py-4 mb-12 border-b border-stone-200"
-      >
-        <div class="text-2xl font-bold text-stone-800">
-          <a href="index.html">ProjectHub</a>
-        </div>
-        <div class="flex items-center gap-8">
-          <div class="hidden md:flex items-center space-x-8">
-            <a
-              href="index.html"
-              class="text-stone-600 hover:text-indigo-600 font-medium"
-              >Home</a
-            >
-            <a href="#" class="text-stone-600 hover:text-indigo-600 font-medium"
-              >About</a
-            >
-            <a href="#" class="text-stone-600 hover:text-indigo-600 font-medium"
-              >Contact</a
-            >
-          </div>
-          <div class="relative">
-            <button id="profileBtn" class="flex items-center space-x-2">
-              <img
-                class="w-10 h-10 rounded-full border-2 border-stone-300"
-                src="https://placehold.co/100x100/E2E8F0/4A5568?text=AV"
-                alt="User Avatar"
-              />
-            </button>
-            <div
-              id="profileDropdown"
-              class="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg py-1 hidden origin-top-right"
-            >
-              <a
-                href="#"
-                class="block px-4 py-2 text-sm text-stone-700 hover:bg-stone-100"
-                >Your Profile</a
-              >
-              <a
-                href="#"
-                class="block px-4 py-2 text-sm text-stone-700 hover:bg-stone-100"
-                >Settings</a
-              >
-              <a
-                href="login.html"
-                class="block px-4 py-2 text-sm text-red-600 hover:bg-stone-100"
-                >Logout</a
-              >
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      <header
-        class="flex flex-col md:flex-row justify-between md:items-center mb-16 gap-4"
-      >
-        <div>
-          <h1
-            class="text-4xl md:text-5xl font-bold text-stone-800 text-center md:text-left"
-          >
-            Project Dashboard
-          </h1>
-          <p class="mt-2 text-lg text-stone-600 text-center md:text-left">
-            Welcome to the project hub. Track your projects from conception to
-            completion.
-          </p>
-        </div>
-        <div class="w-full md:w-auto flex-shrink-0">
-          <button
-            id="newProjectBtn"
-            class="w-full md:w-auto bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-indigo-700 transition-colors text-lg whitespace-nowrap"
-          >
-            + New Project
-          </button>
-        </div>
-      </header>
-
-      <main class="grid grid-cols-1 gap-12 bg-stone-100 p-4 sm:p-8 rounded-2xl">
-        <section>
-          <h2
-            class="text-2xl font-bold text-stone-700 mb-6 flex items-center gap-3"
-          >
-            <span class="text-2xl">🚀</span>
-            <span>Upcoming</span>
-            <span
-              id="upcoming-count"
-              class="bg-indigo-100 text-indigo-800 text-sm font-semibold px-2.5 py-0.5 rounded-full"
-              >1</span
-            >
-          </h2>
-          <div id="upcoming-column" class="kanban-column space-y-6">
-            <a
-              href="finance_tracker.html"
-              class="project-card block bg-white p-8 rounded-2xl shadow-sm hover:border-indigo-400"
-            >
-              <div class="text-3xl mb-4">💰</div>
-              <h2 class="text-2xl font-bold text-stone-800 mb-2">
-                Personal Finance Tracker
-              </h2>
-              <p class="text-stone-600 mb-6">
-                A practical SaaS-style product with a focus on data
-                visualization and smart, ML-powered financial insights.
-              </p>
-              <span class="font-semibold text-indigo-600 hover:text-indigo-800"
-                >View Project Plan &rarr;</span
-              >
-            </a>
-          </div>
-        </section>
-
-        <section>
-          <h2
-            class="text-2xl font-bold text-stone-700 mb-6 flex items-center gap-3"
-          >
-            <span class="text-2xl">💻</span>
-            <span>On Going</span>
-            <span
-              id="ongoing-count"
-              class="bg-amber-100 text-amber-800 text-sm font-semibold px-2.5 py-0.5 rounded-full"
-              >1</span
-            >
-          </h2>
-          <div id="ongoing-column" class="kanban-column space-y-6">
-            <a
-              href="code_platform.html"
-              class="project-card block bg-white p-8 rounded-2xl shadow-sm hover:border-indigo-400"
-            >
-              <div class="text-3xl mb-4">💻</div>
-              <h2 class="text-2xl font-bold text-stone-800 mb-2">
-                Collaborative Code Editor
-              </h2>
-              <p class="text-stone-600 mb-6">
-                A real-time, multi-user coding environment demonstrating
-                advanced system design skills with WebSockets.
-              </p>
-              <span class="font-semibold text-indigo-600 hover:text-indigo-800"
-                >View Project Plan &rarr;</span
-              >
-            </a>
-          </div>
-        </section>
-
-        <section>
-          <h2
-            class="text-2xl font-bold text-stone-700 mb-6 flex items-center gap-3"
-          >
-            <span class="text-2xl">✅</span>
-            <span>Completed</span>
-            <span
-              id="completed-count"
-              class="bg-emerald-100 text-emerald-800 text-sm font-semibold px-2.5 py-0.5 rounded-full"
-              >1</span
-            >
-          </h2>
-          <div id="completed-column" class="kanban-column space-y-6">
-            <a
-              href="resume_screener.html"
-              class="project-card block bg-white p-8 rounded-2xl shadow-sm hover:border-indigo-400"
-            >
-              <div class="text-3xl mb-4">📄</div>
-              <h2 class="text-2xl font-bold text-stone-800 mb-2">
-                AI Resume Screener
-              </h2>
-              <p class="text-stone-600 mb-6">
-                A full-stack application combining a React frontend with a
-                Python ML microservice for intelligent resume analysis.
-              </p>
-              <span class="font-semibold text-indigo-600 hover:text-indigo-800"
-                >View Project Plan &rarr;</span
-              >
-            </a>
-          </div>
-        </section>
-      </main>
-
-      <footer class="text-center mt-16 py-8 border-t border-stone-200">
-        <p class="text-stone-600">
-          &copy; 2024 ProjectHub. All Rights Reserved.
+  <body class="antialiased flex items-center justify-center min-h-screen">
+    <div class="w-full max-w-md mx-auto p-8">
+      <div class="text-center mb-10">
+        <h1 class="text-3xl font-bold text-stone-800">Welcome to ProjectHub</h1>
+        <p class="text-stone-600 mt-2">
+          Sign in to continue to your dashboard.
         </p>
-      </footer>
-    </div>
-
-    <!-- New Project Modal -->
-    <div
-      id="newProjectModal"
-      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden p-4"
-    >
-      <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl">
-        <div class="relative p-6 border-b border-stone-200">
-          <h2 class="text-2xl font-bold">Create New Project</h2>
+      </div>
+      <div class="login-card p-8 rounded-2xl shadow-lg">
+        <form action="index.html">
+          <div class="mb-4">
+            <label for="email" class="block text-stone-700 font-medium mb-2"
+              >Email Address</label
+            >
+            <input
+              type="email"
+              id="email"
+              class="w-full p-3 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              required
+              placeholder="you@example.com"
+            />
+          </div>
+          <div class="mb-6">
+            <label for="password" class="block text-stone-700 font-medium mb-2"
+              >Password</label
+            >
+            <input
+              type="password"
+              id="password"
+              class="w-full p-3 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              required
+              placeholder="••••••••"
+            />
+          </div>
+          <div class="flex items-center justify-between mb-6">
+            <label class="flex items-center text-sm text-stone-600">
+              <input
+                type="checkbox"
+                class="h-4 w-4 text-indigo-600 rounded border-stone-300 focus:ring-indigo-500"
+              />
+              <span class="ml-2">Remember me</span>
+            </label>
+            <a
+              href="#"
+              class="text-sm font-medium text-indigo-600 hover:text-indigo-800"
+              >Forgot password?</a
+            >
+          </div>
           <button
-            id="closeModalBtn"
-            class="absolute top-4 right-4 text-stone-500 hover:text-stone-800 transition-colors"
+            type="submit"
+            class="w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-indigo-700 transition-colors"
           >
-            <svg
-              class="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M6 18L18 6M6 6l12 12"
-              ></path>
-            </svg>
+            Sign In
           </button>
-        </div>
-        <form id="newProjectForm">
-          <div class="p-6 modal-body space-y-6">
-            <fieldset>
-              <legend class="text-lg font-semibold text-stone-800 mb-3">
-                Project Details
-              </legend>
-              <div class="space-y-4">
-                <div>
-                  <label
-                    for="projectName"
-                    class="block text-stone-700 font-medium mb-1"
-                    >Project Name</label
-                  >
-                  <input
-                    type="text"
-                    id="projectName"
-                    class="w-full p-2 border border-stone-300 rounded-lg"
-                    required
-                  />
-                </div>
-                <div>
-                  <label
-                    for="projectDescription"
-                    class="block text-stone-700 font-medium mb-1"
-                    >Description</label
-                  >
-                  <textarea
-                    id="projectDescription"
-                    rows="3"
-                    class="w-full p-2 border border-stone-300 rounded-lg"
-                    required
-                  ></textarea>
-                </div>
-                <div>
-                  <label
-                    for="projectStatus"
-                    class="block text-stone-700 font-medium mb-1"
-                    >Status</label
-                  >
-                  <select
-                    id="projectStatus"
-                    class="w-full p-2 border border-stone-300 rounded-lg bg-white"
-                  >
-                    <option value="upcoming">Upcoming</option>
-                    <option value="ongoing">On Going</option>
-                    <option value="completed">Completed</option>
-                  </select>
-                </div>
-              </div>
-            </fieldset>
-
-            <fieldset>
-              <legend class="text-lg font-semibold text-stone-800 mb-3">
-                Project Stats
-              </legend>
-              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div>
-                  <label
-                    for="projectTimeline"
-                    class="block text-stone-700 font-medium mb-1"
-                    >Timeline</label
-                  >
-                  <input
-                    type="text"
-                    id="projectTimeline"
-                    placeholder="e.g., 8 Weeks"
-                    class="w-full p-2 border border-stone-300 rounded-lg"
-                  />
-                </div>
-                <div>
-                  <label
-                    for="projectPhases"
-                    class="block text-stone-700 font-medium mb-1"
-                    >No. of Phases</label
-                  >
-                  <input
-                    type="number"
-                    id="projectPhases"
-                    placeholder="e.g., 6"
-                    class="w-full p-2 border border-stone-300 rounded-lg"
-                  />
-                </div>
-                <div>
-                  <label
-                    for="projectPillars"
-                    class="block text-stone-700 font-medium mb-1"
-                    >Tech Pillars</label
-                  >
-                  <input
-                    type="text"
-                    id="projectPillars"
-                    placeholder="e.g., React, Node"
-                    class="w-full p-2 border border-stone-300 rounded-lg"
-                  />
-                </div>
-              </div>
-            </fieldset>
-
-            <fieldset>
-              <legend class="text-lg font-semibold text-stone-800 mb-3">
-                Team
-              </legend>
-              <div id="teamMembersContainer" class="space-y-2">
-                <div class="team-member-row flex items-center gap-2">
-                  <input
-                    type="text"
-                    placeholder="Developer Name"
-                    class="team-member-name w-full p-2 border border-stone-300 rounded-lg"
-                  />
-                  <label
-                    class="flex items-center gap-1.5 text-sm text-stone-600 cursor-pointer"
-                  >
-                    <input
-                      type="radio"
-                      name="teamLeadRadio"
-                      class="team-lead-radio h-4 w-4 text-indigo-600 focus:ring-indigo-500"
-                      checked
-                    />
-                    Lead
-                  </label>
-                </div>
-              </div>
-              <button
-                type="button"
-                id="addMemberBtn"
-                class="mt-2 text-sm text-indigo-600 hover:text-indigo-800 font-semibold"
-              >
-                + Add Another Member
-              </button>
-            </fieldset>
-
-            <fieldset>
-              <legend class="text-lg font-semibold text-stone-800 mb-3">
-                Development Phases
-              </legend>
-              <div id="phasesContainer" class="space-y-4">
-                <!-- Phases will be added here -->
-              </div>
-              <button
-                type="button"
-                id="addPhaseBtn"
-                class="mt-2 text-sm text-indigo-600 hover:text-indigo-800 font-semibold"
-              >
-                + Add Phase
-              </button>
-            </fieldset>
-          </div>
-          <div class="p-6 bg-stone-50 rounded-b-2xl flex justify-end gap-4">
-            <button
-              type="button"
-              id="cancelBtn"
-              class="py-2 px-4 bg-stone-200 text-stone-800 rounded-lg hover:bg-stone-300"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              class="py-2 px-4 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
-            >
-              Create Project
-            </button>
-          </div>
         </form>
+        <p class="text-center text-sm text-stone-600 mt-8">
+          Don't have an account?
+          <a href="#" class="font-medium text-indigo-600 hover:text-indigo-800"
+            >Sign up</a
+          >
+        </p>
       </div>
     </div>
-
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const newProjectBtn = document.getElementById("newProjectBtn");
-        const modal = document.getElementById("newProjectModal");
-        const cancelBtn = document.getElementById("cancelBtn");
-        const closeModalBtn = document.getElementById("closeModalBtn");
-        const newProjectForm = document.getElementById("newProjectForm");
-
-        const addMemberBtn = document.getElementById("addMemberBtn");
-        const teamMembersContainer = document.getElementById(
-          "teamMembersContainer"
-        );
-
-        const addPhaseBtn = document.getElementById("addPhaseBtn");
-        const phasesContainer = document.getElementById("phasesContainer");
-
-        const profileBtn = document.getElementById("profileBtn");
-        const profileDropdown = document.getElementById("profileDropdown");
-
-        profileBtn.addEventListener("click", () => {
-          profileDropdown.classList.toggle("hidden");
-        });
-
-        document.addEventListener("click", (e) => {
-          if (
-            !profileBtn.contains(e.target) &&
-            !profileDropdown.contains(e.target)
-          ) {
-            profileDropdown.classList.add("hidden");
-          }
-        });
-
-        const openModal = () => modal.classList.remove("hidden");
-        const closeModal = () => {
-          modal.classList.add("hidden");
-          newProjectForm.reset();
-          teamMembersContainer.innerHTML = `<div class="team-member-row flex items-center gap-2">
-                            <input type="text" placeholder="Developer Name" class="team-member-name w-full p-2 border border-stone-300 rounded-lg">
-                            <label class="flex items-center gap-1.5 text-sm text-stone-600 cursor-pointer">
-                                <input type="radio" name="teamLeadRadio" class="team-lead-radio h-4 w-4 text-indigo-600 focus:ring-indigo-500" checked>
-                                Lead
-                            </label>
-                        </div>`;
-          phasesContainer.innerHTML = "";
-        };
-
-        newProjectBtn.addEventListener("click", openModal);
-        cancelBtn.addEventListener("click", closeModal);
-        closeModalBtn.addEventListener("click", closeModal);
-
-        modal.addEventListener("click", (e) => {
-          if (e.target === modal) closeModal();
-        });
-
-        addMemberBtn.addEventListener("click", () => {
-          const memberInput = document.createElement("div");
-          memberInput.className = "team-member-row flex items-center gap-2";
-          memberInput.innerHTML = `<input type="text" placeholder="Developer Name" class="team-member-name w-full p-2 border border-stone-300 rounded-lg">
-                            <label class="flex items-center gap-1.5 text-sm text-stone-600 cursor-pointer">
-                                <input type="radio" name="teamLeadRadio" class="team-lead-radio h-4 w-4 text-indigo-600 focus:ring-indigo-500">
-                                Lead
-                            </label>`;
-          teamMembersContainer.appendChild(memberInput);
-        });
-
-        let phaseCounter = 0;
-        addPhaseBtn.addEventListener("click", () => {
-          phaseCounter++;
-          const phaseEl = document.createElement("div");
-          phaseEl.className =
-            "p-4 border border-stone-200 rounded-lg bg-stone-50";
-          phaseEl.innerHTML = `
-                    <div class="space-y-2">
-                        <input type="text" placeholder="Phase ${phaseCounter} Title" class="phase-title w-full p-2 border border-stone-300 rounded-lg font-medium">
-                        <div class="tasks-container space-y-2">
-                            <div class="flex items-center gap-2">
-                                <input type="text" placeholder="Task description" class="task-description w-full p-2 border border-stone-300 rounded-lg">
-                                <select class="task-category p-2 border border-stone-300 rounded-lg bg-white">
-                                    <option>Frontend</option>
-                                    <option>Backend</option>
-                                    <option>DevOps</option>
-                                    <option>AI/ML</option>
-                                </select>
-                            </div>
-                        </div>
-                        <button type="button" class="add-task-btn text-xs text-indigo-600 hover:text-indigo-800 font-semibold">+ Add Task</button>
-                    </div>
-                `;
-          phasesContainer.appendChild(phaseEl);
-        });
-
-        phasesContainer.addEventListener("click", (e) => {
-          if (e.target.classList.contains("add-task-.btn")) {
-            const tasksContainer = e.target.previousElementSibling;
-            const taskEl = document.createElement("div");
-            taskEl.className = "flex items-center gap-2";
-            taskEl.innerHTML = `
-                        <input type="text" placeholder="Task description" class="task-description w-full p-2 border border-stone-300 rounded-lg">
-                        <select class="task-category p-2 border border-stone-300 rounded-lg bg-white">
-                            <option>Frontend</option>
-                            <option>Backend</option>
-                            <option>DevOps</option>
-                            <option>AI/ML</option>
-                        </select>
-                    `;
-            tasksContainer.appendChild(taskEl);
-          }
-        });
-
-        const updateCountsAndPlaceholders = () => {
-          const columns = {
-            upcoming: document.getElementById("upcoming-column"),
-            ongoing: document.getElementById("ongoing-column"),
-            completed: document.getElementById("completed-column"),
-          };
-
-          for (const key in columns) {
-            const column = columns[key];
-            const count = column.querySelectorAll(".project-card").length;
-            document.getElementById(`${key}-count`).textContent = count;
-
-            let placeholder = column.querySelector(".empty-state");
-            if (count === 0 && !placeholder) {
-              placeholder = document.createElement("div");
-              placeholder.className = "empty-state";
-              placeholder.innerHTML = `<p>No projects in this stage yet.</p>`;
-              column.appendChild(placeholder);
-            } else if (count > 0 && placeholder) {
-              placeholder.remove();
-            }
-          }
-        };
-
-        newProjectForm.addEventListener("submit", (e) => {
-          e.preventDefault();
-
-          const team = [];
-          document.querySelectorAll(".team-member-row").forEach((row) => {
-            const nameInput = row.querySelector(".team-member-name");
-            const radioInput = row.querySelector(".team-lead-radio");
-            if (nameInput.value.trim() !== "") {
-              team.push({
-                name: nameInput.value,
-                isLead: radioInput.checked,
-              });
-            }
-          });
-
-          const projectData = {
-            name: document.getElementById("projectName").value,
-            description: document.getElementById("projectDescription").value,
-            status: document.getElementById("projectStatus").value,
-            timeline: document.getElementById("projectTimeline").value,
-            phasesCount: document.getElementById("projectPhases").value,
-            pillars: document.getElementById("projectPillars").value,
-            team: team,
-            phases: [],
-          };
-
-          document
-            .querySelectorAll("#phasesContainer > div")
-            .forEach((phaseEl) => {
-              const phaseData = {
-                title: phaseEl.querySelector(".phase-title").value,
-                tasks: [],
-              };
-              phaseEl
-                .querySelectorAll(".tasks-container > div")
-                .forEach((taskEl) => {
-                  phaseData.tasks.push({
-                    description:
-                      taskEl.querySelector(".task-description").value,
-                    category: taskEl.querySelector(".task-category").value,
-                  });
-                });
-              projectData.phases.push(phaseData);
-            });
-
-          const newCard = document.createElement("a");
-          newCard.href = "#"; // Placeholder link
-          newCard.className =
-            "project-card block bg-white p-8 rounded-2xl shadow-sm hover:border-indigo-400";
-          newCard.innerHTML = `
-                    <div class="text-3xl mb-4">💡</div>
-                    <h2 class="text-2xl font-bold text-stone-800 mb-2">${
-                      projectData.name
-                    }</h2>
-                    <p class="text-stone-600 mb-6">${
-                      projectData.description
-                    }</p>
-                    <div class="flex flex-wrap gap-4 text-sm text-stone-600 mb-6">
-                        ${
-                          projectData.timeline
-                            ? `<span><strong>Timeline:</strong> ${projectData.timeline}</span>`
-                            : ""
-                        }
-                        ${
-                          projectData.phasesCount
-                            ? `<span><strong>Phases:</strong> ${projectData.phasesCount}</span>`
-                            : ""
-                        }
-                        ${
-                          projectData.pillars
-                            ? `<span><strong>Pillars:</strong> ${projectData.pillars}</span>`
-                            : ""
-                        }
-                    </div>
-                    ${
-                      projectData.team.length > 0
-                        ? `<div class="mb-4"><p class="font-semibold text-sm text-stone-500">Team:</p><div class="flex flex-wrap gap-2 mt-2">${projectData.team
-                            .map(
-                              (member) =>
-                                `<span class="bg-stone-200 text-stone-700 text-xs font-medium px-2.5 py-1 rounded-full">${
-                                  member.name
-                                }${member.isLead ? " ⭐" : ""}</span>`
-                            )
-                            .join("")}</div></div>`
-                        : ""
-                    }
-                    <span class="font-semibold text-indigo-600 hover:text-indigo-800">View Project Plan &rarr;</span>`;
-
-          const columnId = `${projectData.status}-column`;
-          document.getElementById(columnId).appendChild(newCard);
-
-          closeModal();
-          updateCountsAndPlaceholders();
-        });
-
-        // Initial setup for placeholders and default projects on page load
-        const initialSetup = () => {
-          updateCountsAndPlaceholders();
-        };
-
-        initialSetup();
-      });
-    </script>
   </body>
 </html>

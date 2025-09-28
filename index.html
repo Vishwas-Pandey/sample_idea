@@ -144,13 +144,26 @@
             <span
               id="upcoming-count"
               class="bg-indigo-100 text-indigo-800 text-sm font-semibold px-2.5 py-0.5 rounded-full"
-              >0</span
+              >1</span
             >
           </h2>
           <div id="upcoming-column" class="kanban-column space-y-6">
-            <div class="empty-state">
-              <p>No projects in this stage yet.</p>
-            </div>
+            <a
+              href="finance_tracker.html"
+              class="project-card block bg-white p-8 rounded-2xl shadow-sm hover:border-indigo-400"
+            >
+              <div class="text-3xl mb-4">💰</div>
+              <h2 class="text-2xl font-bold text-stone-800 mb-2">
+                Personal Finance Tracker
+              </h2>
+              <p class="text-stone-600 mb-6">
+                A practical SaaS-style product with a focus on data
+                visualization and smart, ML-powered financial insights.
+              </p>
+              <span class="font-semibold text-indigo-600 hover:text-indigo-800"
+                >View Project Plan &rarr;</span
+              >
+            </a>
           </div>
         </section>
 
@@ -163,13 +176,26 @@
             <span
               id="ongoing-count"
               class="bg-amber-100 text-amber-800 text-sm font-semibold px-2.5 py-0.5 rounded-full"
-              >0</span
+              >1</span
             >
           </h2>
           <div id="ongoing-column" class="kanban-column space-y-6">
-            <div class="empty-state">
-              <p>No projects in this stage yet.</p>
-            </div>
+            <a
+              href="code_platform.html"
+              class="project-card block bg-white p-8 rounded-2xl shadow-sm hover:border-indigo-400"
+            >
+              <div class="text-3xl mb-4">💻</div>
+              <h2 class="text-2xl font-bold text-stone-800 mb-2">
+                Collaborative Code Editor
+              </h2>
+              <p class="text-stone-600 mb-6">
+                A real-time, multi-user coding environment demonstrating
+                advanced system design skills with WebSockets.
+              </p>
+              <span class="font-semibold text-indigo-600 hover:text-indigo-800"
+                >View Project Plan &rarr;</span
+              >
+            </a>
           </div>
         </section>
 
@@ -182,13 +208,26 @@
             <span
               id="completed-count"
               class="bg-emerald-100 text-emerald-800 text-sm font-semibold px-2.5 py-0.5 rounded-full"
-              >0</span
+              >1</span
             >
           </h2>
           <div id="completed-column" class="kanban-column space-y-6">
-            <div class="empty-state">
-              <p>No projects in this stage yet.</p>
-            </div>
+            <a
+              href="resume_screener.html"
+              class="project-card block bg-white p-8 rounded-2xl shadow-sm hover:border-indigo-400"
+            >
+              <div class="text-3xl mb-4">📄</div>
+              <h2 class="text-2xl font-bold text-stone-800 mb-2">
+                AI Resume Screener
+              </h2>
+              <p class="text-stone-600 mb-6">
+                A full-stack application combining a React frontend with a
+                Python ML microservice for intelligent resume analysis.
+              </p>
+              <span class="font-semibold text-indigo-600 hover:text-indigo-800"
+                >View Project Plan &rarr;</span
+              >
+            </a>
           </div>
         </section>
       </main>
@@ -486,7 +525,7 @@
         });
 
         phasesContainer.addEventListener("click", (e) => {
-          if (e.target.classList.contains("add-task-btn")) {
+          if (e.target.classList.contains("add-task-.btn")) {
             const tasksContainer = e.target.previousElementSibling;
             const taskEl = document.createElement("div");
             taskEl.className = "flex items-center gap-2";
@@ -622,12 +661,8 @@
           updateCountsAndPlaceholders();
         });
 
-        // Initial setup for placeholders on page load
+        // Initial setup for placeholders and default projects on page load
         const initialSetup = () => {
-          // Clear out the dummy project cards from HTML
-          document.getElementById("upcoming-column").innerHTML = "";
-          document.getElementById("ongoing-column").innerHTML = "";
-          document.getElementById("completed-column").innerHTML = "";
           updateCountsAndPlaceholders();
         };
 

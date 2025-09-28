@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Personal Finance Tracker: Interactive Project Plan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f8f7f4;
+        color: #44403c;
+      }
+      .phase-button {
+        transition: all 0.2s ease-in-out;
+      }
+      .phase-button.active {
+        background-color: #0ea5e9;
+        color: white;
+        transform: translateX(10px);
+        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1),
+          0 2px 4px -2px rgb(0 0 0 / 0.1);
+      }
+      .task-card-enter,
+      .gemini-idea-enter {
+        animation: fadeIn 0.5s ease-out forwards;
+        opacity: 0;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .chart-container {
+        position: relative;
+        width: 100%;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+        height: 40vh;
+        max-height: 400px;
+      }
+      .tech-pill {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 500;
+        margin: 0.25rem;
+      }
+      .bg-fe {
+        background-color: #dbeafe;
+        color: #1e40af;
+      }
+      .bg-be {
+        background-color: #dcfce7;
+        color: #166534;
+      }
+      .bg-ml {
+        background-color: #fee2e2;
+        color: #991b1b;
+      }
+      .bg-devops {
+        background-color: #e5e5e5;
+        color: #404040;
+      }
+      .spinner {
+        width: 24px;
+        height: 24px;
+        border: 3px solid rgba(0, 0, 0, 0.1);
+        border-left-color: #0ea5e9;
+        border-radius: 50%;
+        display: inline-block;
+        animation: spin 1s linear infinite;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body class="antialiased">
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+      <header class="text-center mb-10">
+        <a
+          href="index.html"
+          class="text-indigo-600 hover:text-indigo-800 mb-4 inline-block"
+          >&larr; Back to Project Hub</a
+        >
+        <h1 class="text-4xl md:text-5xl font-bold text-stone-800">
+          Personal Finance Tracker
+        </h1>
+        <p class="mt-2 text-lg text-stone-600 max-w-3xl mx-auto">
+          A practical app for tracking expenses and gaining smart financial
+          insights through data visualization and forecasting.
+        </p>
+      </header>
+      <div
+        id="stats-grid"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12 text-center"
+      >
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+          <h3 class="text-3xl font-bold text-sky-600">8</h3>
+          <p class="text-stone-500">Week Timeline</p>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+          <h3 class="text-3xl font-bold text-sky-600">6</h3>
+          <p class="text-stone-500">Development Phases</p>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+          <h3 class="text-3xl font-bold text-sky-600">4</h3>
+          <p class="text-stone-500">Tech Pillars</p>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+          <h3 class="text-3xl font-bold text-sky-600">1</h3>
+          <p class="text-stone-500">SaaS Potential</p>
+        </div>
+      </div>
+      <main class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <aside class="lg:col-span-3">
+          <div
+            class="bg-white p-6 rounded-xl shadow-sm border border-stone-200 sticky top-8"
+          >
+            <h2 class="text-xl font-bold mb-4 text-stone-700">
+              Project Phases
+            </h2>
+            <p class="text-sm text-stone-500 mb-6">
+              Select a phase below to dive into its goals, timeline, and
+              specific tasks.
+            </p>
+            <nav id="phase-navigation" class="space-y-2"></nav>
+          </div>
+        </aside>
+        <div class="lg:col-span-9 space-y-8">
+          <section
+            id="details-pane"
+            class="bg-white p-6 sm:p-8 rounded-xl shadow-sm border border-stone-200 min-h-[400px]"
+          >
+            <div id="phase-header" class="mb-6 pb-4 border-b border-stone-200">
+              <h2
+                id="phase-title"
+                class="text-2xl md:text-3xl font-bold text-stone-800"
+              ></h2>
+              <p id="phase-goal" class="mt-1 text-stone-600"></p>
+            </div>
+            <div id="task-list" class="space-y-4"></div>
+            <div class="mt-6 pt-6 border-t border-stone-200">
+              <button
+                id="gemini-button"
+                class="flex items-center justify-center w-full px-4 py-3 font-semibold text-white bg-gradient-to-r from-sky-500 to-indigo-500 rounded-lg shadow-md hover:from-sky-600 hover:to-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-transform transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                ✨ Generate Task Ideas
+              </button>
+              <div id="gemini-loading" class="text-center mt-4 hidden">
+                <div
+                  class="flex items-center justify-center space-x-2 text-stone-500"
+                >
+                  <div class="spinner"></div>
+                  <span>Generating ideas with Gemini...</span>
+                </div>
+              </div>
+              <div id="gemini-results" class="mt-4 space-y-3"></div>
+            </div>
+          </section>
+          <section
+            class="bg-white p-6 sm:p-8 rounded-xl shadow-sm border border-stone-200"
+          >
+            <h2 class="text-2xl font-bold text-stone-800 mb-2">
+              Workload Distribution
+            </h2>
+            <p class="text-stone-600 max-w-3xl mb-6">
+              This chart visualizes the distribution of work across the
+              different technology pillars throughout the project's timeline.
+            </p>
+            <div class="chart-container">
+              <canvas id="workloadChart"></canvas>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+    <script>
+      const projectPlan = {
+        projectData: [
+          {
+            phase: "Phase 1: Backend & User Authentication",
+            week: "Week 1",
+            goal: "Build the server foundation, database models, and a secure user authentication system.",
+            tasks: [
+              {
+                category: "Backend",
+                task: "Initialize Node.js project with Express and connect to MongoDB.",
+              },
+              {
+                category: "Backend",
+                task: "Create User and Transaction database schemas.",
+              },
+              {
+                category: "Backend",
+                task: "Implement user registration and login API endpoints with JWT.",
+              },
+              {
+                category: "DevOps",
+                task: "Set up Git repository and basic CI for the backend.",
+              },
+            ],
+          },
+          {
+            phase: "Phase 2: Core Frontend & Transaction CRUD",
+            week: "Weeks 2-3",
+            goal: "Develop the main user interface for viewing, adding, editing, and deleting transactions.",
+            tasks: [
+              {
+                category: "Frontend",
+                task: "Initialize React project and set up Recharts & Tailwind CSS.",
+              },
+              {
+                category: "Frontend",
+                task: "Create a dashboard layout and transaction table component.",
+              },
+              {
+                category: "Frontend",
+                task: "Build a form modal for adding/editing transactions with validation.",
+              },
+              {
+                category: "Backend",
+                task: "Create secure CRUD API endpoints for transactions.",
+              },
+              {
+                category: "Frontend",
+                task: "Connect the frontend to all transaction APIs.",
+              },
+            ],
+          },
+          {
+            phase: "Phase 3: Data Visualization Dashboard",
+            week: "Weeks 4-5",
+            goal: "Implement interactive charts and graphs to visualize financial data.",
+            tasks: [
+              {
+                category: "Backend",
+                task: "Create API endpoints that provide aggregated data for charts (e.g., spending by category).",
+              },
+              {
+                category: "Frontend",
+                task: "Use Recharts to create a pie chart for expense categories.",
+              },
+              {
+                category: "Frontend",
+                task: "Use Recharts to create a bar chart for monthly income vs. expenses.",
+              },
+              {
+                category: "Frontend",
+                task: "Add filters to the dashboard for different time ranges (e.g., Month, Year).",
+              },
+            ],
+          },
+          {
+            phase: "Phase 4: Budgeting & Goal Setting",
+            week: "Week 6",
+            goal: "Introduce features for users to set and track their financial budgets.",
+            tasks: [
+              {
+                category: "Backend",
+                task: "Create Budget database schema and associated APIs.",
+              },
+              {
+                category: "Frontend",
+                task: "Design and build a UI for users to create and view monthly budgets.",
+              },
+              {
+                category: "Frontend",
+                task: "Implement progress bars to visually track spending against budgets.",
+              },
+              {
+                category: "Backend",
+                task: "Add logic to calculate budget progress on the backend.",
+              },
+            ],
+          },
+          {
+            phase: "Phase 5: ML for Smart Insights",
+            week: "Week 7",
+            goal: "Add a small machine learning model to provide users with predictive insights.",
+            tasks: [
+              {
+                category: "AI/ML",
+                task: "Develop a simple expense forecasting model (e.g., linear regression) in a Python script.",
+              },
+              {
+                category: "Backend",
+                task: "Create a job that runs the ML script periodically to update forecasts.",
+              },
+              {
+                category: "Backend",
+                task: "Create a new API endpoint to serve these smart insights.",
+              },
+              {
+                category: "Frontend",
+                task: "Display insights on the dashboard (e.g., 'You are projected to spend $X on groceries this month.').",
+              },
+            ],
+          },
+          {
+            phase: "Phase 6: Final Polish & Deployment",
+            week: "Week 8",
+            goal: "Refine the application, perform testing, and deploy it to a live environment.",
+            tasks: [
+              {
+                category: "Frontend",
+                task: "Conduct a full UI/UX review and apply polish.",
+              },
+              {
+                category: "DevOps",
+                task: "Containerize the frontend and backend applications using Docker.",
+              },
+              {
+                category: "DevOps",
+                task: "Set up a CI/CD pipeline for automated deployments.",
+              },
+              {
+                category: "DevOps",
+                task: "Deploy to a cloud platform and configure the database.",
+              },
+            ],
+          },
+        ],
+        geminiMockResponses: {
+          0: [
+            "Implement password hashing using bcrypt.",
+            "Add API rate limiting to prevent abuse.",
+            "Set up an email service for account verification.",
+          ],
+          1: [
+            "Implement client-side state management (e.g., Context API).",
+            "Add optimistic UI updates for faster user feedback.",
+            "Create a reusable custom hook for API calls.",
+          ],
+          2: [
+            "Add tooltips to charts for detailed information on hover.",
+            "Implement a 'Top Spending' summary card.",
+            "Ensure all charts are fully responsive and accessible.",
+          ],
+          3: [
+            "Send notifications when a user is approaching their budget limit.",
+            "Allow budgets to roll over to the next month.",
+            "Create a dedicated 'Budgets' page with more analysis.",
+          ],
+          4: [
+            "Explore more advanced forecasting models (e.g., ARIMA).",
+            "Add insights for identifying unusual spending patterns.",
+            "Allow users to give feedback on insights.",
+          ],
+          5: [
+            "Implement end-to-end tests using a framework like Cypress.",
+            "Add comprehensive documentation for the API.",
+            "Set up logging and monitoring for production.",
+          ],
+        },
+        workloadData: {
+          labels: [
+            "Week 1",
+            "Week 2",
+            "Week 3",
+            "Week 4",
+            "Week 5",
+            "Week 6",
+            "Week 7",
+            "Week 8",
+          ],
+          datasets: [
+            {
+              label: "Frontend",
+              data: [0, 3, 2, 2, 2, 2, 1, 1],
+              backgroundColor: "#38bdf8",
+            },
+            {
+              label: "Backend",
+              data: [3, 2, 2, 1, 2, 2, 2, 0],
+              backgroundColor: "#4ade80",
+            },
+            {
+              label: "AI/ML",
+              data: [0, 0, 0, 0, 0, 0, 1, 0],
+              backgroundColor: "#f87171",
+            },
+            {
+              label: "DevOps",
+              data: [1, 0, 0, 0, 0, 0, 0, 3],
+              backgroundColor: "#a3a3a3",
+            },
+          ],
+        },
+      };
+      let activePhaseIndex = 0;
+      const phaseNavigation = document.getElementById("phase-navigation");
+      const phaseTitle = document.getElementById("phase-title");
+      const phaseGoal = document.getElementById("phase-goal");
+      const taskList = document.getElementById("task-list");
+      const geminiButton = document.getElementById("gemini-button");
+      const geminiLoading = document.getElementById("gemini-loading");
+      const geminiResults = document.getElementById("gemini-results");
+      async function callGeminiApi(phaseIndex) {
+        geminiButton.disabled = true;
+        geminiLoading.classList.remove("hidden");
+        geminiResults.innerHTML = "";
+        return new Promise((resolve) =>
+          setTimeout(
+            () => resolve(projectPlan.geminiMockResponses[phaseIndex] || []),
+            1500
+          )
+        );
+      }
+      async function handleGeminiClick() {
+        const ideas = await callGeminiApi(activePhaseIndex);
+        geminiLoading.classList.add("hidden");
+        geminiButton.disabled = false;
+        geminiResults.innerHTML = `<h4 class="font-bold text-stone-700 mb-2">✨ AI-Generated Suggestions</h4>`;
+        ideas.forEach((idea, i) => {
+          const ideaElement = document.createElement("div");
+          ideaElement.className =
+            "gemini-idea-enter p-3 bg-indigo-50 rounded-lg border border-indigo-200 text-indigo-800 text-sm";
+          ideaElement.style.animationDelay = `${i * 100}ms`;
+          ideaElement.textContent = `💡 ${idea}`;
+          geminiResults.appendChild(ideaElement);
+        });
+      }
+      function renderPhaseDetails(index) {
+        const phase = projectPlan.projectData[index];
+        phaseTitle.textContent = `${phase.phase} (${phase.week})`;
+        phaseGoal.textContent = phase.goal;
+        taskList.innerHTML = "";
+        phase.tasks.forEach((task, i) => {
+          const pillClass =
+            task.category === "Frontend"
+              ? "bg-fe"
+              : task.category === "Backend"
+              ? "bg-be"
+              : task.category === "AI/ML"
+              ? "bg-ml"
+              : "bg-devops";
+          const taskEl = document.createElement("div");
+          taskEl.className =
+            "task-card-enter flex items-start space-x-4 p-4 bg-stone-50 rounded-lg border border-stone-200";
+          taskEl.style.animationDelay = `${i * 50}ms`;
+          taskEl.innerHTML = `<div><span class="tech-pill ${pillClass}">${task.category}</span></div><p class="flex-1 text-stone-700">${task.task}</p>`;
+          taskList.appendChild(taskEl);
+        });
+        geminiResults.innerHTML = "";
+        geminiLoading.classList.add("hidden");
+        geminiButton.disabled = false;
+      }
+      function updateActiveButton(index) {
+        phaseNavigation
+          .querySelectorAll(".phase-button")
+          .forEach((button, i) =>
+            button.classList.toggle("active", i === index)
+          );
+      }
+      function handlePhaseClick(index) {
+        activePhaseIndex = index;
+        renderPhaseDetails(activePhaseIndex);
+        updateActiveButton(activePhaseIndex);
+      }
+      function initializeNavigation() {
+        projectPlan.projectData.forEach((phase, index) => {
+          const button = document.createElement("button");
+          button.className =
+            "phase-button w-full text-left p-3 rounded-lg hover:bg-sky-100 focus:outline-none focus:ring-2 focus:ring-sky-500";
+          button.innerHTML = `<span class="font-semibold text-stone-700">${
+            phase.phase.split(":")[0]
+          }</span><span class="block text-sm text-stone-500">${
+            phase.week
+          }</span>`;
+          button.addEventListener("click", () => handlePhaseClick(index));
+          phaseNavigation.appendChild(button);
+        });
+      }
+      function initializeChart() {
+        const ctx = document.getElementById("workloadChart").getContext("2d");
+        new Chart(ctx, {
+          type: "bar",
+          data: projectPlan.workloadData,
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              title: { display: false },
+              tooltip: { mode: "index", intersect: false },
+            },
+            scales: {
+              x: { stacked: true, grid: { display: false } },
+              y: {
+                stacked: true,
+                title: { display: true, text: "Number of Core Tasks" },
+              },
+            },
+          },
+        });
+      }
+      document.addEventListener("DOMContentLoaded", () => {
+        initializeNavigation();
+        geminiButton.addEventListener("click", handleGeminiClick);
+        handlePhaseClick(0);
+        initializeChart();
+      });
+    </script>
+  </body>
+</html>

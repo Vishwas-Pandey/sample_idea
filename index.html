@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projects Under Work</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f8f7f4;
+        color: #44403c;
+      }
+      .project-card {
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        border: 1px solid #e7e5e4;
+      }
+      .project-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+          0 4px 6px -4px rgb(0 0 0 / 0.1);
+      }
+    </style>
+  </head>
+  <body class="antialiased">
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+      <header class="text-center mb-12">
+        <h1 class="text-4xl md:text-5xl font-bold text-stone-800">
+          Project Portfolio Dashboard
+        </h1>
+        <p class="mt-3 text-lg text-stone-600 max-w-2xl mx-auto">
+          Welcome to the project hub. Select a project below to view its
+          detailed interactive plan.
+        </p>
+      </header>
+
+      <main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Project Card 1: AI Resume Screener -->
+        <a
+          href="resume_screener.html"
+          class="project-card block bg-white p-8 rounded-2xl shadow-sm hover:border-indigo-400"
+        >
+          <div class="text-3xl mb-4">📄</div>
+          <h2 class="text-2xl font-bold text-stone-800 mb-2">
+            AI Resume Screener
+          </h2>
+          <p class="text-stone-600 mb-6">
+            A full-stack application combining a React frontend with a Python ML
+            microservice for intelligent resume analysis.
+          </p>
+          <span class="font-semibold text-indigo-600 hover:text-indigo-800"
+            >View Project Plan &rarr;</span
+          >
+        </a>
+
+        <!-- Project Card 2: Collaborative Coding Platform -->
+        <a
+          href="code_platform.html"
+          class="project-card block bg-white p-8 rounded-2xl shadow-sm hover:border-indigo-400"
+        >
+          <div class="text-3xl mb-4">💻</div>
+          <h2 class="text-2xl font-bold text-stone-800 mb-2">
+            Collaborative Code Editor
+          </h2>
+          <p class="text-stone-600 mb-6">
+            A real-time, multi-user coding environment demonstrating advanced
+            system design skills with WebSockets.
+          </p>
+          <span class="font-semibold text-indigo-600 hover:text-indigo-800"
+            >View Project Plan &rarr;</span
+          >
+        </a>
+
+        <!-- Project Card 3: Personal Finance Tracker -->
+        <a
+          href="finance_tracker.html"
+          class="project-card block bg-white p-8 rounded-2xl shadow-sm hover:border-indigo-400"
+        >
+          <div class="text-3xl mb-4">💰</div>
+          <h2 class="text-2xl font-bold text-stone-800 mb-2">
+            Personal Finance Tracker
+          </h2>
+          <p class="text-stone-600 mb-6">
+            A practical SaaS-style product with a focus on data visualization
+            and smart, ML-powered financial insights.
+          </p>
+          <span class="font-semibold text-indigo-600 hover:text-indigo-800"
+            >View Project Plan &rarr;</span
+          >
+        </a>
+      </main>
+    </div>
+  </body>
+</html>

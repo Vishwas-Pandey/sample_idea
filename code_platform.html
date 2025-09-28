@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Personal Finance Tracker: Interactive Project Plan</title>
+    <title>Collaborative Code Editor: Interactive Project Plan</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -68,10 +68,6 @@
         background-color: #dcfce7;
         color: #166534;
       }
-      .bg-ml {
-        background-color: #fee2e2;
-        color: #991b1b;
-      }
       .bg-devops {
         background-color: #e5e5e5;
         color: #404040;
@@ -90,6 +86,40 @@
           transform: rotate(360deg);
         }
       }
+      .task-checkbox-item {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+      }
+      .task-checkbox-item input[type="checkbox"] {
+        appearance: none;
+        width: 1.25rem;
+        height: 1.25rem;
+        border: 2px solid #a8a29e;
+        border-radius: 0.25rem;
+        margin-right: 0.75rem;
+        cursor: pointer;
+        position: relative;
+        transition: background-color 0.2s, border-color 0.2s;
+        flex-shrink: 0;
+      }
+      .task-checkbox-item input[type="checkbox"]:checked {
+        background-color: #0ea5e9;
+        border-color: #0ea5e9;
+      }
+      .task-checkbox-item input[type="checkbox"]:checked::after {
+        content: "✔";
+        color: white;
+        font-size: 0.8rem;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .task-checkbox-item label.completed {
+        text-decoration: line-through;
+        color: #78716c;
+      }
     </style>
   </head>
   <body class="antialiased">
@@ -101,11 +131,11 @@
           >&larr; Back to Project Hub</a
         >
         <h1 class="text-4xl md:text-5xl font-bold text-stone-800">
-          Personal Finance Tracker
+          Collaborative Coding Platform
         </h1>
         <p class="mt-2 text-lg text-stone-600 max-w-3xl mx-auto">
-          A practical app for tracking expenses and gaining smart financial
-          insights through data visualization and forecasting.
+          A real-time code editor project plan, focusing on system design and
+          live collaboration features.
         </p>
       </header>
       <div
@@ -121,12 +151,12 @@
           <p class="text-stone-500">Development Phases</p>
         </div>
         <div class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
-          <h3 class="text-3xl font-bold text-sky-600">4</h3>
+          <h3 class="text-3xl font-bold text-sky-600">3</h3>
           <p class="text-stone-500">Tech Pillars</p>
         </div>
         <div class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
           <h3 class="text-3xl font-bold text-sky-600">1</h3>
-          <p class="text-stone-500">SaaS Potential</p>
+          <p class="text-stone-500">Real-time App</p>
         </div>
       </div>
       <main class="grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -175,6 +205,20 @@
               <div id="gemini-results" class="mt-4 space-y-3"></div>
             </div>
           </section>
+
+          <section
+            id="progress-tracker-pane"
+            class="bg-white p-6 sm:p-8 rounded-xl shadow-sm border border-stone-200"
+          >
+            <h2 class="text-2xl font-bold text-stone-800 mb-4">
+              Phase Progress Tracker
+            </h2>
+            <p class="text-stone-600 mb-6">
+              Check off the tasks as you complete them for the selected phase.
+            </p>
+            <div id="progress-list" class="space-y-3"></div>
+          </section>
+
           <section
             class="bg-white p-6 sm:p-8 rounded-xl shadow-sm border border-stone-200"
           >
@@ -196,178 +240,174 @@
       const projectPlan = {
         projectData: [
           {
-            phase: "Phase 1: Backend & User Authentication",
+            phase: "Phase 1: Foundation & Editor Setup",
             week: "Week 1",
-            goal: "Build the server foundation, database models, and a secure user authentication system.",
+            goal: "Set up the core application structure and integrate a client-side code editor.",
             tasks: [
               {
                 category: "Backend",
-                task: "Initialize Node.js project with Express and connect to MongoDB.",
+                task: "Initialize Node.js project with Express and Socket.IO.",
               },
               {
                 category: "Backend",
-                task: "Create User and Transaction database schemas.",
+                task: "Set up basic Socket.IO connection listener.",
               },
               {
-                category: "Backend",
-                task: "Implement user registration and login API endpoints with JWT.",
+                category: "Frontend",
+                task: "Initialize React project and install CodeMirror/Monaco Editor library.",
               },
               {
-                category: "DevOps",
-                task: "Set up Git repository and basic CI for the backend.",
+                category: "Frontend",
+                task: "Embed the code editor into a React component.",
               },
             ],
           },
           {
-            phase: "Phase 2: Core Frontend & Transaction CRUD",
+            phase: "Phase 2: Real-time Sync Core Logic",
             week: "Weeks 2-3",
-            goal: "Develop the main user interface for viewing, adding, editing, and deleting transactions.",
+            goal: "Implement the real-time synchronization of code between multiple clients.",
             tasks: [
               {
-                category: "Frontend",
-                task: "Initialize React project and set up Recharts & Tailwind CSS.",
-              },
-              {
-                category: "Frontend",
-                task: "Create a dashboard layout and transaction table component.",
-              },
-              {
-                category: "Frontend",
-                task: "Build a form modal for adding/editing transactions with validation.",
+                category: "Backend",
+                task: "Create a 'room' concept in Socket.IO for session management.",
               },
               {
                 category: "Backend",
-                task: "Create secure CRUD API endpoints for transactions.",
+                task: "Implement logic to broadcast code changes to all clients in a room.",
               },
               {
                 category: "Frontend",
-                task: "Connect the frontend to all transaction APIs.",
+                task: "Emit an event to the server whenever the editor content changes.",
+              },
+              {
+                category: "Frontend",
+                task: "Listen for incoming code change events and update the editor content.",
               },
             ],
           },
           {
-            phase: "Phase 3: Data Visualization Dashboard",
+            phase: "Phase 3: Multi-user & Room Management",
             week: "Weeks 4-5",
-            goal: "Implement interactive charts and graphs to visualize financial data.",
+            goal: "Develop features for users to create, join, and see other participants in coding sessions.",
             tasks: [
               {
                 category: "Backend",
-                task: "Create API endpoints that provide aggregated data for charts (e.g., spending by category).",
+                task: "Develop API endpoints for creating and joining rooms (e.g., using unique IDs).",
+              },
+              {
+                category: "Backend",
+                task: "Manage user presence, broadcasting when users join or leave a room.",
               },
               {
                 category: "Frontend",
-                task: "Use Recharts to create a pie chart for expense categories.",
+                task: "Build a UI for creating or entering a room ID.",
               },
               {
                 category: "Frontend",
-                task: "Use Recharts to create a bar chart for monthly income vs. expenses.",
+                task: "Display a list of currently connected users/avatars in the session.",
               },
               {
-                category: "Frontend",
-                task: "Add filters to the dashboard for different time ranges (e.g., Month, Year).",
+                category: "DevOps",
+                task: "Set up a PostgreSQL/MongoDB database to persist room information.",
               },
             ],
           },
           {
-            phase: "Phase 4: Budgeting & Goal Setting",
+            phase: "Phase 4: Advanced Editor Features",
             week: "Week 6",
-            goal: "Introduce features for users to set and track their financial budgets.",
+            goal: "Enhance the editor with features like language selection and code execution.",
             tasks: [
               {
-                category: "Backend",
-                task: "Create Budget database schema and associated APIs.",
+                category: "Frontend",
+                task: "Add a dropdown to select the coding language (e.g., JavaScript, Python).",
               },
               {
                 category: "Frontend",
-                task: "Design and build a UI for users to create and view monthly budgets.",
-              },
-              {
-                category: "Frontend",
-                task: "Implement progress bars to visually track spending against budgets.",
+                task: "Implement syntax highlighting changes based on language selection.",
               },
               {
                 category: "Backend",
-                task: "Add logic to calculate budget progress on the backend.",
+                task: "Integrate with a code execution API (e.g., Judge0, JDoodle).",
+              },
+              {
+                category: "Backend",
+                task: "Create a secure endpoint to proxy code execution requests.",
               },
             ],
           },
           {
-            phase: "Phase 5: ML for Smart Insights",
+            phase: "Phase 5: UI/UX & Refinement",
             week: "Week 7",
-            goal: "Add a small machine learning model to provide users with predictive insights.",
+            goal: "Polish the user interface and improve the overall collaborative experience.",
             tasks: [
               {
-                category: "AI/ML",
-                task: "Develop a simple expense forecasting model (e.g., linear regression) in a Python script.",
-              },
-              {
-                category: "Backend",
-                task: "Create a job that runs the ML script periodically to update forecasts.",
-              },
-              {
-                category: "Backend",
-                task: "Create a new API endpoint to serve these smart insights.",
+                category: "Frontend",
+                task: "Design and implement a clean, intuitive layout for the editor and user list.",
               },
               {
                 category: "Frontend",
-                task: "Display insights on the dashboard (e.g., 'You are projected to spend $X on groceries this month.').",
+                task: "Add a 'Copy Share Link' button for easy invitations.",
+              },
+              {
+                category: "Frontend",
+                task: "Implement different editor themes (e.g., light/dark mode).",
               },
             ],
           },
           {
-            phase: "Phase 6: Final Polish & Deployment",
+            phase: "Phase 6: Deployment & Testing",
             week: "Week 8",
-            goal: "Refine the application, perform testing, and deploy it to a live environment.",
+            goal: "Containerize, test, and deploy the application.",
             tasks: [
               {
-                category: "Frontend",
-                task: "Conduct a full UI/UX review and apply polish.",
+                category: "DevOps",
+                task: "Create Dockerfiles for the frontend and backend services.",
               },
               {
                 category: "DevOps",
-                task: "Containerize the frontend and backend applications using Docker.",
+                task: "Configure Nginx as a reverse proxy for WebSocket connections.",
               },
               {
                 category: "DevOps",
-                task: "Set up a CI/CD pipeline for automated deployments.",
+                task: "Deploy the application to a cloud provider.",
               },
               {
-                category: "DevOps",
-                task: "Deploy to a cloud platform and configure the database.",
+                category: "Backend",
+                task: "Conduct basic load testing on Socket.IO connections.",
               },
             ],
           },
         ],
         geminiMockResponses: {
           0: [
-            "Implement password hashing using bcrypt.",
-            "Add API rate limiting to prevent abuse.",
-            "Set up an email service for account verification.",
+            "Design the database schema for user accounts and sessions.",
+            "Set up a linter and formatter for consistent code style.",
+            "Choose a UI component library for React.",
           ],
           1: [
-            "Implement client-side state management (e.g., Context API).",
-            "Add optimistic UI updates for faster user feedback.",
-            "Create a reusable custom hook for API calls.",
+            "Research conflict resolution strategies for real-time editing.",
+            "Implement cursor position sharing.",
+            "Add debouncing to the editor's change event.",
           ],
           2: [
-            "Add tooltips to charts for detailed information on hover.",
-            "Implement a 'Top Spending' summary card.",
-            "Ensure all charts are fully responsive and accessible.",
+            "Implement user authentication to protect rooms.",
+            "Add a feature to make rooms public or private.",
+            "Persist chat messages for each room.",
           ],
           3: [
-            "Send notifications when a user is approaching their budget limit.",
-            "Allow budgets to roll over to the next month.",
-            "Create a dedicated 'Budgets' page with more analysis.",
+            "Cache results from the code execution API.",
+            "Add a loading indicator while code is executing.",
+            "Display stdout, stderr, and execution time in the UI.",
           ],
           4: [
-            "Explore more advanced forecasting models (e.g., ARIMA).",
-            "Add insights for identifying unusual spending patterns.",
-            "Allow users to give feedback on insights.",
+            "Conduct user testing to gather feedback.",
+            "Add responsive design for tablets.",
+            "Create a settings modal for editor preferences.",
           ],
           5: [
-            "Implement end-to-end tests using a framework like Cypress.",
-            "Add comprehensive documentation for the API.",
-            "Set up logging and monitoring for production.",
+            "Implement end-to-end tests for the collaboration flow.",
+            "Set up automated build and deployment pipelines.",
+            "Configure SSL/TLS for secure communication.",
           ],
         },
         workloadData: {
@@ -384,22 +424,17 @@
           datasets: [
             {
               label: "Frontend",
-              data: [0, 3, 2, 2, 2, 2, 1, 1],
+              data: [2, 2, 0, 2, 2, 2, 3, 0],
               backgroundColor: "#38bdf8",
             },
             {
               label: "Backend",
-              data: [3, 2, 2, 1, 2, 2, 2, 0],
+              data: [2, 2, 0, 2, 0, 2, 0, 1],
               backgroundColor: "#4ade80",
             },
             {
-              label: "AI/ML",
-              data: [0, 0, 0, 0, 0, 0, 1, 0],
-              backgroundColor: "#f87171",
-            },
-            {
               label: "DevOps",
-              data: [1, 0, 0, 0, 0, 0, 0, 3],
+              data: [0, 0, 0, 0, 1, 0, 0, 3],
               backgroundColor: "#a3a3a3",
             },
           ],
@@ -413,6 +448,8 @@
       const geminiButton = document.getElementById("gemini-button");
       const geminiLoading = document.getElementById("gemini-loading");
       const geminiResults = document.getElementById("gemini-results");
+      const progressList = document.getElementById("progress-list");
+
       async function callGeminiApi(phaseIndex) {
         geminiButton.disabled = true;
         geminiLoading.classList.remove("hidden");
@@ -424,6 +461,7 @@
           )
         );
       }
+
       async function handleGeminiClick() {
         const ideas = await callGeminiApi(activePhaseIndex);
         geminiLoading.classList.add("hidden");
@@ -438,6 +476,7 @@
           geminiResults.appendChild(ideaElement);
         });
       }
+
       function renderPhaseDetails(index) {
         const phase = projectPlan.projectData[index];
         phaseTitle.textContent = `${phase.phase} (${phase.week})`;
@@ -449,8 +488,6 @@
               ? "bg-fe"
               : task.category === "Backend"
               ? "bg-be"
-              : task.category === "AI/ML"
-              ? "bg-ml"
               : "bg-devops";
           const taskEl = document.createElement("div");
           taskEl.className =
@@ -463,6 +500,35 @@
         geminiLoading.classList.add("hidden");
         geminiButton.disabled = false;
       }
+
+      function renderProgressTracker(index) {
+        const phase = projectPlan.projectData[index];
+        progressList.innerHTML = "";
+        if (phase.tasks.length === 0) {
+          progressList.innerHTML =
+            '<p class="text-stone-500">No tasks in this phase to track.</p>';
+          return;
+        }
+        phase.tasks.forEach((task, i) => {
+          const listItem = document.createElement("div");
+          listItem.className =
+            "task-checkbox-item p-3 bg-stone-50 rounded-lg border border-stone-200 hover:bg-stone-100";
+          const checkbox = document.createElement("input");
+          checkbox.type = "checkbox";
+          checkbox.id = `task-${index}-${i}`;
+          const label = document.createElement("label");
+          label.htmlFor = `task-${index}-${i}`;
+          label.textContent = task.task;
+          label.className = "flex-1 text-stone-700 pl-2";
+          listItem.appendChild(checkbox);
+          listItem.appendChild(label);
+          checkbox.addEventListener("change", () => {
+            label.classList.toggle("completed");
+          });
+          progressList.appendChild(listItem);
+        });
+      }
+
       function updateActiveButton(index) {
         phaseNavigation
           .querySelectorAll(".phase-button")
@@ -470,11 +536,14 @@
             button.classList.toggle("active", i === index)
           );
       }
+
       function handlePhaseClick(index) {
         activePhaseIndex = index;
         renderPhaseDetails(activePhaseIndex);
+        renderProgressTracker(activePhaseIndex);
         updateActiveButton(activePhaseIndex);
       }
+
       function initializeNavigation() {
         projectPlan.projectData.forEach((phase, index) => {
           const button = document.createElement("button");
@@ -489,6 +558,7 @@
           phaseNavigation.appendChild(button);
         });
       }
+
       function initializeChart() {
         const ctx = document.getElementById("workloadChart").getContext("2d");
         new Chart(ctx, {
@@ -511,6 +581,7 @@
           },
         });
       }
+
       document.addEventListener("DOMContentLoaded", () => {
         initializeNavigation();
         geminiButton.addEventListener("click", handleGeminiClick);
